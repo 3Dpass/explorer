@@ -9,6 +9,8 @@ services:
     entrypoint: /usr/src/start.sh
     ports:
       - '9620:9616'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     environment:
       - DB_CONNECTION=mysql+pymysql://root:root@mysql:3306/polkascan?charset=utf8mb4
 #       - SUBSTRATE_RPC_URL=ws://substrate-node:9944
