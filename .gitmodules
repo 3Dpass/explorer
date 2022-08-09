@@ -1,9 +1,12 @@
 [submodule "harvester"]
 	path = harvester
 	url = https://github.com/3Dpass/harvester.git
+	branch = main
 [submodule "explorer-api"]
 	path = explorer-api
 	url = https://github.com/3Dpass/explorer-api.git
+	branch = harvester
 [submodule "explorer-ui"]
 	path = explorer-ui
 	url = https://github.com/3Dpass/explorer-ui.git
+	branch = main
