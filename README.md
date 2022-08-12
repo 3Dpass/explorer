@@ -73,3 +73,6 @@ By default, the UI are using the 3DPass endpoints, new networks can be added by 
   }
 }
 ```
+### Copyright 
+- Copyright (C) 2021 POLKASCAN https://github.com/polkascan/explorer
+- Copyright (C) 2022 3DPass https://github.com/3Dpass/explorer
