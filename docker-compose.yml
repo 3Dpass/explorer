@@ -65,7 +65,7 @@ services:
       - SERVER_ADDR=localhost
       - SERVER_PORT=8000
       - WEBSOCKET_URI=ws://localhost:8000
-      - BACKEND_CORS_ORIGINS=["http://localhost:3000", "https://wallet.3dpass.org"]
+      - BACKEND_CORS_ORIGINS=["http://localhost:3000", "https://wallet.3dpass.org", "https://explorer2.3dpass.org"]
       - BROADCAST_URI=redis://redis:6379
       - API_SQLA_URI=mysql+pymysql://root:root@mysql:3306/polkascan_explorer?charset=utf8mb4
       - CHAIN_ID=polkadot
