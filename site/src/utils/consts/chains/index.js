@@ -34,8 +34,10 @@ import argon from "./argon";
 import collectivesWestend from "./collectives-westend";
 import cereTestnet from "./cere-testnet";
 import cere from "./cere";
+import threeDpass from "./3dpass";
 
 const chains = {
+  "3dpass": threeDpass,
   polkadot,
   statemint,
   "bridgehub-polkadot": bridgehubPolkadot,

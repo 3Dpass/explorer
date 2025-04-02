@@ -162,7 +162,7 @@ export default function Header() {
                 </ExploreInputPCWrapper>
               )}
               <Flex gap={8}>
-                <ChainSwitch />
+                {/* <ChainSwitch /> */}
                 <NodeSwitch />
               </Flex>
             </Flex>

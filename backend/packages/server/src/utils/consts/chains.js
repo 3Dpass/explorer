@@ -1,6 +1,7 @@
 const isNil = require("lodash.isnil");
 
 const chains = Object.freeze({
+  "3dpass": "3dpass",
   polkadot: "polkadot",
   kusama: "kusama",
   paseo: "paseo",
@@ -48,6 +49,7 @@ const chains = Object.freeze({
 });
 
 const ss58Format = Object.freeze({
+  [chains["3dpass"]]: 71,
   [chains.polkadot]: 0,
   [chains.kusama]: 2,
   [chains.paseo]: 0,
@@ -117,6 +119,7 @@ const uniquesModuleChains = [
 
 const transferOnBlockChains = [
   // whose native token transfer records are in block-scan DB.
+  chains["3dpass"],
   chains.paseo,
   chains.stagelight,
   chains.tangle,
