@@ -1,8 +1,8 @@
 [phases.setup]
-commands = ["cd ../../.. && yarn install"]
+cmds = ["cd ../../.. && yarn install"]
 
 [phases.install]
-commands = ["yarn install"]
+cmds = ["yarn install"]
 
-[phases.start]
+[start]
 cmd = "node src/index.js"
