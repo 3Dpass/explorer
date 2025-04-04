@@ -1,7 +1,5 @@
 import { useRef } from "react";
-import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
-import { chainSettingSelector } from "../../../store/reducers/settingSlice";
 import { smcss } from "../../../styles/responsive";
 import { bg_theme500, w_full } from "../../../styles/tailwindcss";
 import { Inter_24_700 } from "../../../styles/text";
@@ -43,7 +41,6 @@ const Title = styled.h1`
 `;
 
 export default function Explore() {
-  const settings = useSelector(chainSettingSelector);
   const exploreRef = useRef();
   const isDark = useIsDark();
 
