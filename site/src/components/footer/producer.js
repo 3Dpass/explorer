@@ -51,7 +51,7 @@ const Text = styled.p`
 export default function Producer() {
   return (
     <Wrapper>
-      <Text>{`© ${new Date().getFullYear()} Statescan Explorer`}</Text>
+      <Text>{`© ${new Date().getFullYear()} The Ledger of Things Explorer`}</Text>
       <PC>
         <Text>·</Text>
       </PC>
