@@ -1,6 +1,5 @@
-# Statescan-V2 site
-## This is the source for the site at https://statescan.io
-
+# 3dpscan.xyz website
+## This is the source for the site at https://3dpscan.xyz 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
