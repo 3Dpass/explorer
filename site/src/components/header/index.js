@@ -24,7 +24,6 @@ import NodeSwitch from "../nodeSwitch";
 import { Flex, FlexBetween } from "../styled/flex";
 import LinkOrigin from "../styled/link";
 import { Mobile, PC } from "../styled/responsive";
-import ChainSwitch from "./chainSwitch";
 import { ReactComponent as Logo } from "./logo.svg";
 import MobileButton from "./mobile/button";
 import MobileNodeSwitch from "./mobileNodeSwitch";
@@ -162,7 +161,6 @@ export default function Header() {
                 </ExploreInputPCWrapper>
               )}
               <Flex gap={8}>
-                {/* <ChainSwitch /> */}
                 <NodeSwitch />
               </Flex>
             </Flex>
@@ -182,7 +180,6 @@ export default function Header() {
                 <ExploreInput />
               </ExploreInputMobileWrapper>
 
-              <ChainSwitch />
               <MobileNodeSwitch />
               <Navi />
             </MobileMenuWrapper>
