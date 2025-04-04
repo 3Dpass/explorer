@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
+import { gap_x } from "../../styles/tailwindcss";
 import { ReactComponent as Github } from "./github.svg";
 import { ReactComponent as X } from "./x.svg";
-import { ReactComponent as Element } from "./element.svg";
-import { gap_x } from "../../styles/tailwindcss";
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,25 +34,18 @@ export default function SocialMedia() {
   return (
     <Wrapper>
       <Link
-        href="https://github.com/opensquare-network/"
+        href="https://github.com/3dpass/explorer"
         target="_blank"
         referrerPolicy="no-referrer"
       >
         <Github width={20} height={20} />
       </Link>
       <Link
-        href="https://twitter.com/OpensquareN"
+        href="https://x.com/3Dpass_genesis"
         target="_blank"
         referrerPolicy="no-referrer"
       >
         <X width={20} height={20} />
-      </Link>
-      <Link
-        href="https://app.element.io/#/room/#opensquare:matrix.org"
-        target="_blank"
-        referrerPolicy="no-referrer"
-      >
-        <Element width={20} height={20} />
       </Link>
     </Wrapper>
   );
