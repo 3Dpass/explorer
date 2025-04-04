@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { CACHE_KEY } from "../../utils/constants";
-import { getEnvChain } from "../../utils/env";
 import chains from "../../utils/consts/chains";
+import { getEnvChain } from "../../utils/env";
 
 export const mode = Object.freeze({
   light: "light",
@@ -11,10 +11,10 @@ export const mode = Object.freeze({
 export function getInitMode() {
   let result;
   try {
-    result = localStorage.getItem(CACHE_KEY.themeMode) ?? mode.light;
+    result = localStorage.getItem(CACHE_KEY.themeMode) ?? mode.dark;
   } catch (e) {
     // ignore parse error
-    result = mode.light;
+    result = mode.dark;
   }
 
   return result;
