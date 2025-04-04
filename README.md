@@ -1,7 +1,6 @@
-# statescan-v2
+# 3dpscan
 
-Statescan is a modularized and business pluggable explorer for [substrate](https://github.com/paritytech/substrate)
-based chains.
+3dpscan is a blockchain explorer for The Ledger of Things.
 
 ## Terminology
 
