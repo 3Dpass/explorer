@@ -1,7 +1,7 @@
 export const treasuryModules = {
-  treasury: false,
+  treasury: true,
 };
 
 export const governanceModules = {
-  governance: false,
+  governance: true,
 };

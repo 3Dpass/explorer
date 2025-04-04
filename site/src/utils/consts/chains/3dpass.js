@@ -1,35 +1,33 @@
 import { ReactComponent as Polkadot } from "../../../components/icons/polkadot.svg";
-import { polkadotColor } from "./common";
-import { governanceModules, treasuryModules } from "./modules";
 
-const polkadot = {
+const threeDpass = {
   name: "3DPass",
   icon: <Polkadot />,
   identity: "3dpass",
   sub: "3dpass",
   value: "3dpass",
   chain: "3dpass",
-  symbol: "3DP",
+  symbol: "P3D",
   decimals: 12,
   chainIcon: "originalPolkadot",
-  ...polkadotColor,
-  buttonColor: "#E6007A",
+  color: "#008c4d",
+  colorSecondary: "rgba(230, 0, 122, 0.1)",
+  buttonColor: "#008c4d",
   logo: "logo-img-2",
   modules: {
-    ...treasuryModules,
-    ...governanceModules,
     identity: true,
-    multisig: true,
-    vestings: true,
-    proxy: true,
+    multisig: false,
+    vestings: false,
+    proxy: false,
   },
   treasuryWebsite: "https://polkadot.dotreasury.com",
   subSquareWebsite: "https://polkadot.subsquare.io",
   nodes: [
     { name: "Node1", url: "wss://rpc.3dpass.org/" },
     { name: "Node2", url: "wss://rpc2.3dpass.org/" },
+    { name: "Node3", url: "wss://rpc3.3dpass.org/" },
   ],
   useOnChainBlockData: true,
 };
 
-export default polkadot;
+export default threeDpass;
