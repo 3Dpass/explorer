@@ -1,7 +1,10 @@
 services:
-  site:
-    build:
-      context: site
-      dockerfile: Dockerfile
+  mongo:
+    image: mongo:latest
     ports:
-      - 80:80
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./data/db:/data/db
