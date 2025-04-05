@@ -15,6 +15,7 @@ const threeDpass = {
   buttonColor: "#008c4d",
   logo: "logo-img-2",
   modules: {
+    assets: true,
     identity: true,
     multisig: false,
     vestings: false,

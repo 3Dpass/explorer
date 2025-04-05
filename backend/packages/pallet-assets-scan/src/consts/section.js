@@ -5,6 +5,7 @@ const {
 const chainSections = {
   statemint: "assets",
   polimec: "foreignAssets",
+  "3dpass": "poscanAssets",
 };
 
 function getSection() {
