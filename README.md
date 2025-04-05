@@ -7,6 +7,27 @@
 - Data indexing: we use js scripts to query blockchain history data, normalize and save them to database.
 - Scan: it's a process that we index blockchain data in a height asc order.
 
+## Requirements
+Full archive LoT blockchain data base is required for the explorer to operate. Run the [Node](https://github.com/3dpass/P3D) with the 
+`--pruning archive` flag and sync it from genesis block to get the db prepared for scanning. 
+
+```
+./target/release/poscan-consensus \
+ --base-path ~/3dp-chain/ \
+ --chain mainnetSpecRaw.json \
+ --name "my 160 USD dedicated server" \ 
+ --validator \
+ --telemetry-url "wss://submit.3dpass.network/submit 0" \
+ --author <your mining pub key> \
+ --no-mdns \
+ --unsafe-ws-external \
+ --unsafe-rpc-external \
+ --rpc-cors all \
+ --ws-port 9945 \
+ --rpc-port 9934 \
+ --pruning archive \
+```
+
 ## Code structure
 
 This code base can be divided into 3 parts: data indexing, servers(restful and graphql) and fronted pages.
@@ -45,6 +66,3 @@ storage.
 
 Then generally we should first index necessary data, then setup restful and graphql servers, and finally the site.
 Servers rely on the indexed data, and site reply on the APIs by the servers.
-
-For more detail or questions, you can reach us in [matrix](https://app.element.io/#/room/#opensquare:matrix.org) or
-create issues [here](https://github.com/opensquare-network/statescan-v2/issues).
