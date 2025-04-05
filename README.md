@@ -66,3 +66,105 @@ storage.
 
 Then generally we should first index necessary data, then setup restful and graphql servers, and finally the site.
 Servers rely on the indexed data, and site reply on the APIs by the servers.
+
+## GET API 
+
+### 1. Network overview: 
+
+URL: https://api.3dpscan.xyz/overview
+
+```
+{
+  "latestHeight": 1337566,
+  "finalizedHeight": 1337564,
+  "totalIssuance": "771319474246270346717",
+  "signedExtrinsics": 1135042,
+  "transfers": 1085854,
+  "accounts": 3897
+}
+```
+
+### 2. Recent transfers: 
+
+URL: https://api.3dpscan.xyz/transfers?page=0&page_size=25&signed_only=true
+
+Paramaters: 
+
+- `page=0` - page number
+- `page_size=25` - number of transfers per page
+- `signed_only=true` - if only signed transfers required (the `true` is recommended for most of the cases)
+
+
+Responce: 
+```
+{
+  "items": [
+    {
+      "indexer": {
+        "blockHeight": 1276047,
+        "blockHash": "0x9c947e48bee48be9aaf1654141512667348c3af93b026030b737091b91c52975",
+        "blockTime": 1740088569406,
+        "eventIndex": 14,
+        "extrinsicIndex": 7
+      },
+      "from": "d1GgtEoKL4Kwd12zTdpkV9KChrvvP5ZjhQRVEmjkTTmBVW9Cy",
+      "to": "d1FnU4K1YphVHFvQ2FgkLYhcvshb83YkXK52jTDU17uPrcX4n",
+      "balance": "218280695797780",
+      "isSigned": true,
+      "isNativeAsset": true
+    },
+  ],
+  "page": 0,
+  "pageSize": 25
+}
+```
+
+### 3. Transfers history for a given address (both incoming and outgoing):
+
+URL: https://api.3dpscan.xyz/accounts/d1FygYC5r7rJz4P7y14oJRKEGBwohkNpV2h1h6vjudz2DUvfP/transfers?page=0&page_size=25
+
+Paramaters: 
+
+- `../d1FygYC5r7rJz4P7y14oJRKEGBwohkNpV2h1h6vjudz2DUvfP/..` - the address to query blockcain data for
+- `page=0` - page number
+- `page_size=25` - number of transfers per page
+
+Responce: 
+```
+{
+  "items": [
+    {
+      "indexer": {
+        "blockHeight": 1173176,
+        "blockHash": "0x915604004e69261a5e8852a98627840ab087443a79b1f126d7d7c9ea05a306db",
+        "blockTime": 1733800300272,
+        "eventIndex": 59
+      },
+      "from": "d1Dhvwtmm6213dcHSQGjVrgBUAPXqyPCkxed6GoWjWpMBM4Zz",
+      "to": "d1FygYC5r7rJz4P7y14oJRKEGBwohkNpV2h1h6vjudz2DUvfP",
+      "balance": "1044776119402",
+      "isSigned": false,
+      "isNativeAsset": true
+    },
+ {
+      "indexer": {
+        "blockHeight": 1164150,
+        "blockHash": "0xb805115134298d9f50a0c02b50947f66431d1118ee6389dd380c55be959cdb59",
+        "blockTime": 1733248259849,
+        "eventIndex": 10,
+        "extrinsicIndex": 5
+      },
+      "from": "d1FygYC5r7rJz4P7y14oJRKEGBwohkNpV2h1h6vjudz2DUvfP",
+      "to": "d1CG3nyJJgJnURJHVsQvE2zHCEay2459Bsv6wF7aLiBZ7xT44",
+      "balance": "2744665400000000",
+      "isSigned": true,
+      "isNativeAsset": true
+    }, 
+
+  ],
+  "page": 0,
+  "pageSize": 25,
+  "total": 6803
+}
+```
+
