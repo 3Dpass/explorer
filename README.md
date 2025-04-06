@@ -88,14 +88,14 @@ URL: https://api.3dpscan.xyz/overview
 
 URL: https://api.3dpscan.xyz/transfers?page=0&page_size=25&signed_only=true
 
-Paramaters: 
+Parameters: 
 
 - `page=0` - page number
 - `page_size=25` - number of transfers per page
 - `signed_only=true` - if only signed transfers required (the `true` is recommended for most of the cases)
 
 
-Responce: 
+Response: 
 ```
 {
   "items": [
@@ -123,13 +123,13 @@ Responce:
 
 URL: https://api.3dpscan.xyz/accounts/d1FygYC5r7rJz4P7y14oJRKEGBwohkNpV2h1h6vjudz2DUvfP/transfers?page=0&page_size=25
 
-Paramaters: 
+Parameters: 
 
 - `../d1FygYC5r7rJz4P7y14oJRKEGBwohkNpV2h1h6vjudz2DUvfP/..` - the address to query blockcain data for
 - `page=0` - page number
 - `page_size=25` - number of transfers per page
 
-Responce: 
+Response: 
 ```
 {
   "items": [
