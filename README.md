@@ -67,7 +67,7 @@ storage.
 Then generally we should first index necessary data, then setup restful and graphql servers, and finally the site.
 Servers rely on the indexed data, and site reply on the APIs by the servers.
 
-## GET API 
+## REST API 
 
 ### 1. Network overview: 
 
