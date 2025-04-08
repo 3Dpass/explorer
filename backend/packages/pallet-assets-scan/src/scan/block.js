@@ -8,6 +8,8 @@ const { tryCreateStatistics } = require("./jobs/statistics");
 async function handleBlock({ block, events }) {
   const blockIndexer = getBlockIndexer(block);
 
+  console.log("Block", block.header.number.toString());
+
   await handleEvents(events, blockIndexer, block.extrinsics);
   await tryCreateStatistics(blockIndexer);
 
