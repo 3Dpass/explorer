@@ -167,4 +167,55 @@ Response:
   "total": 6803
 }
 ```
+### 4. Extrinsic data by txid or extrinsic id:
 
+By `txid` (extrinsic hash):
+  - URL: https://api.3dpscan.xyz/extrinsics/0x4321d4e370b2d43116e8bf5fdb8a260a01d90321f84c3192fb265424246c8b18
+
+By extrinsic id (`blockHeight-extrinsicIndex`):
+  - URL: https://api.3dpscan.xyz/extrinsics/1341436-6
+
+Response:
+```
+{
+  "indexer": {
+    "blockHeight": 1341436,
+    "blockHash": "0x3a4b3e148349ea3b70107fecc96aeb379346e82e4264edc27805db82c842592b",
+    "blockTime": 1744087081836,
+    "extrinsicIndex": 6
+  },
+  "version": 132,
+  "hash": "0x4321d4e370b2d43116e8bf5fdb8a260a01d90321f84c3192fb265424246c8b18",
+  "isSuccess": true,
+  "call": {
+    "callIndex": "0x0804",
+    "section": "balances",
+    "method": "transferAll",
+    "args": [
+      {
+        "name": "dest",
+        "type": "LookupSource",
+        "value": "d1CQTPpCb9YTAowLmzMByyRpue8QmvJZxMXvSxPqiJeQpFpFu"
+      },
+      {
+        "name": "keepAlive",
+        "type": "bool",
+        "value": true
+      }
+    ]
+  },
+  "eventsCount": 4,
+  "isSigned": true,
+  "listIgnore": false,
+  "nonce": 1254,
+  "signer": "d1Hsqexg7GJuHYwaqJ5k5EXvHc4f1MBK5zWMCqK3mhHGmWMiJ",
+  "signature": "0xf2484deb8180465b19752d77e7e35c3b4402c84e213b6248a323e58dd36bce01b94063d4ffe5a92c10fed9ddf784ad2afbb4725fc07853143f0b908db7839c8d",
+  "tip": "0",
+  "lifetime": [
+    1341431,
+    1345527
+  ],
+  "callsCount": 1,
+  "isFinalized": true
+}
+```
