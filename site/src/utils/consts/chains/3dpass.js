@@ -26,7 +26,6 @@ const threeDpass = {
   nodes: [
     { name: "Node1", url: "wss://rpc.3dpass.org/" },
     { name: "Node2", url: "wss://rpc2.3dpass.org/" },
-    { name: "Node3", url: "wss://rpc3.3dpass.org/" },
   ],
   useOnChainBlockData: true,
 };
