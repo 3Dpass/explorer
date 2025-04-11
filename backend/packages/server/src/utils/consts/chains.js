@@ -109,6 +109,7 @@ const assetsModuleChains = [
   chains.statemine,
   chains.westmint,
   chains.parallel,
+  chains["3dpass"],
 ];
 
 const uniquesModuleChains = [
