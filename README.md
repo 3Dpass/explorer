@@ -309,3 +309,24 @@ Response:
 }
 
 ```
+Parameters: 
+- "height" – the block height
+- "hash" – the block hash
+- "time" – the block time
+- "validator" – deprecated field, always `null`. There's no validator in the block header taking place in LoT. 
+- "parentHash" – the parent block hash
+- "stateRoot" - the block state root hash
+- "extrinsicsRoot" - the extrinsics root hash
+- "digest" - the PoW component digest containing the consesnsus logs:
+  - "logs":
+    - "preRuntime" - block author's public key
+    - "seal" - the seal encoded data containing the RandomX(Grid2d μ = x) hash (sealed with the block difficulty)
+    - "other" - Grid2d (μ = 0) hashid (encoded data)
+    - "other" - proof of context historic hash encoded (encoded data)
+    - "other" – Nonce (encoded 3D model of the object in the content of .obj file format)
+- "eventsCount" - total number of events emitted by all the modules
+- "extrinsicsCount" - total number of extrinsics in the block
+- "isFinalized" - GRANDPA blockchain finalization status from the PoA component (the blocks are being finalized by the validator set/masternodes).
+
+Explore the [Proof of Scan](https://3dpass.org/features#scanproof) protocol description for better understanding of the block components. 
+  
