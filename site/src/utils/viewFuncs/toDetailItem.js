@@ -86,9 +86,6 @@ export const toBlockDetailItem = (block) => {
     "Extrinsics Root": (
       <TextSecondaryWithCopy>{block?.extrinsicsRoot}</TextSecondaryWithCopy>
     ),
-    Validator: (
-      <AddressOrIdentity address={block?.validator} ellipsis={false} />
-    ),
   };
 };
 
