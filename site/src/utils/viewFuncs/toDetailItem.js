@@ -86,6 +86,11 @@ export const toBlockDetailItem = (block) => {
     "Extrinsics Root": (
       <TextSecondaryWithCopy>{block?.extrinsicsRoot}</TextSecondaryWithCopy>
     ),
+    "Author": (
+      <AddressOrIdentity address={block?.digest?.logs?.find(
+        obj => obj.hasOwnProperty("preRuntime"))?.preRuntime[1]} ellipsis={false}
+      />
+    ),
   };
 };
 
