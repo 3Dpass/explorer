@@ -15,6 +15,7 @@ import {
   makeOptionWithEmptyDescendant,
   omitExemptedEventMethods,
 } from "../../../utils/filterCommon";
+import { getIsSimpleMode } from "../../../utils/env";
 
 function getSpecVersionDescendant(specVersion) {
   return {
@@ -90,6 +91,10 @@ export function useEventSectionMethodFilter() {
         currentFilterValue.method ?? getFromQuery(location, "method");
       const sectionValue =
         currentFilterValue.section ?? getFromQuery(location, "section");
+      const extrinsicOnlyValue =
+        currentFilterValue.is_extrinsic ?? getFromQuery(location, "is_extrinsic", "true");
+      //const noExtrinsicValue =
+      //  currentFilterValue.no_extrinsic_result ?? getFromQuery(location, "no_extrinsic_result", "true");
 
       const sectionOptions = (
         (
@@ -158,7 +163,42 @@ export function useEventSectionMethodFilter() {
         ),
         defaultDisplay: methodValue,
       };
-      setFilters([specs, section, method]);
+
+      const extrinsicOnly = {
+        value: extrinsicOnlyValue,
+        name: "Extrinsic",
+        query: "is_extrinsic",
+        options: [
+          {
+            text: "Extrinsic only",
+            value: "true",
+          },
+          { text: "All",
+            value: "false",
+          },
+        ],
+      };
+
+      /*
+      const noExtrinsic = {
+        value: noExtrinsicValue,
+        name: "Results",
+        query: "no_extrinsic_result",
+        options: [
+          {
+            text: "No Extrinsic results",
+            value: "true",
+          },
+          { text: "All",
+            value: "false",
+          },
+        ],
+      };
+      */
+
+      const additionalFilters = getIsSimpleMode() ? [] : [extrinsicOnly];
+
+      setFilters([specs, section, method, ...additionalFilters]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [specFilters, location, currentFilterValue]);
