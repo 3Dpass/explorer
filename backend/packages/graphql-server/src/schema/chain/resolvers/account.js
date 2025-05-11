@@ -3,8 +3,9 @@ const { getAccountData } = require("./getAccount");
 const BigNumber = require("bignumber.js");
 
 function calcTransferable(info) {
-  const { free, frozen, reserved } = info;
-  const frozenReserveDif = new BigNumber(frozen).minus(reserved);
+  const { free, frozen, reserved, feeFrozen, miscFrozen } = info;
+  const totalFrozen = frozen ?? new BigNumber(feeFrozen).plus(miscFrozen);
+  const frozenReserveDif = new BigNumber(totalFrozen).minus(reserved);
   const noZeroConsidered = new BigNumber(free || 0)
     .minus(BigNumber.max(frozenReserveDif, 0))
     .toString();
