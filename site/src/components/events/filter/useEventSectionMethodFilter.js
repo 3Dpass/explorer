@@ -1,21 +1,21 @@
+import { stringCamelCase } from "@polkadot/util";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import {
   currentFilterValueSelector,
   fetchSpecsFilter,
   filtersSelector,
   setCurrentFilterValue,
 } from "../../../store/reducers/filterSlice";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { stringCamelCase } from "@polkadot/util";
+import { getIsSimpleMode } from "../../../utils/env";
 import {
   AllOption,
   getFromQuery,
-  sortByName,
   makeOptionWithEmptyDescendant,
   omitExemptedEventMethods,
+  sortByName,
 } from "../../../utils/filterCommon";
-import { getIsSimpleMode } from "../../../utils/env";
 
 function getSpecVersionDescendant(specVersion) {
   return {
@@ -92,9 +92,11 @@ export function useEventSectionMethodFilter() {
       const sectionValue =
         currentFilterValue.section ?? getFromQuery(location, "section");
       const extrinsicOnlyValue =
-        currentFilterValue.is_extrinsic ?? getFromQuery(location, "is_extrinsic", "true");
-      //const noExtrinsicValue =
-      //  currentFilterValue.no_extrinsic_result ?? getFromQuery(location, "no_extrinsic_result", "true");
+        currentFilterValue.is_extrinsic ??
+        getFromQuery(location, "is_extrinsic", "true");
+      // const noExtrinsicValue =
+      //   currentFilterValue.no_extrinsic_result ??
+      //   getFromQuery(location, "no_extrinsic_result", "true");
 
       const sectionOptions = (
         (
@@ -173,28 +175,22 @@ export function useEventSectionMethodFilter() {
             text: "Extrinsic only",
             value: "true",
           },
-          { text: "All",
-            value: "false",
-          },
+          { text: "All", value: "false" },
         ],
       };
 
-      /*
-      const noExtrinsic = {
-        value: noExtrinsicValue,
-        name: "Results",
-        query: "no_extrinsic_result",
-        options: [
-          {
-            text: "No Extrinsic results",
-            value: "true",
-          },
-          { text: "All",
-            value: "false",
-          },
-        ],
-      };
-      */
+      // const noExtrinsic = {
+      //   value: noExtrinsicValue,
+      //   name: "Results",
+      //   query: "no_extrinsic_result",
+      //   options: [
+      //     {
+      //       text: "No Extrinsic results",
+      //       value: "true",
+      //     },
+      //     { text: "All", value: "false" },
+      //   ],
+      // };
 
       const additionalFilters = getIsSimpleMode() ? [] : [extrinsicOnly];
 
