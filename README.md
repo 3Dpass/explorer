@@ -329,4 +329,46 @@ Parameters:
 - "isFinalized" - GRANDPA blockchain finalization status from the PoA component (the blocks are being finalized by the validator set/masternodes).
 
 Explore the [Proof of Scan](https://3dpass.org/features#scanproof) protocol description for better understanding of the block components. 
+
+
+### 5. Difficulty extraction
+- The difficulty is always in the first 4 bytes (8 hex chars) of the seal's second element, little-endian encoded.
+
+Example: 
+
+```js
+async function fetchCurrentDifficulty(API_BASE) {
+  // 1. Get latest finalized block height
+  const overview = await fetch(`${API_BASE}/overview`).then(res => res.json());
+  const { finalizedHeight } = overview;
+
+  // 2. Fetch the block data
+  const blockRes = await fetch(`${API_BASE}/blocks/${finalizedHeight}`).then(res => res.json());
+
+  // 3. Extract and decode difficulty
+  const sealLog = blockRes?.digest?.logs?.find(log => log.seal);
+  const seal = sealLog?.seal;
+  if (seal && seal.length > 1) {
+    const sealHex = seal[1].replace(/^0x/, '');
+    const difficultyHexLE = sealHex.slice(0, 8);
+    const bytes = difficultyHexLE.match(/../g);
+    if (bytes) {
+      const diff = parseInt(bytes.reverse().join(''), 16);
+      return diff;
+    }
+  }
+  throw new Error('Difficulty not found in block');
+}
+```
+
+Notes:
+
+- The API endpoint is defined by your config, e.g., `API_BASE`.
+
+```js
+const config = {
+const API_BASE: 'https://api.3dpscan.xyz', // Explorer REST API Link
+};
+```
+
   
