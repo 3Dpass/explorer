@@ -7,26 +7,30 @@
 - Data indexing: we use js scripts to query blockchain history data, normalize and save them to database.
 - Scan: it's a process that we index blockchain data in a height asc order.
 
-## Requirements
-Full archive LoT blockchain data base is required for the explorer to operate. Run the [Node](https://github.com/3dpass/P3D) with the 
-`--pruning archive` flag and sync it from genesis block to get the db prepared for scanning. 
+## Prerequisites
 
-```
-./target/release/poscan-consensus \
- --base-path ~/3dp-chain/ \
- --chain mainnetSpecRaw.json \
- --name "my 160 USD dedicated server" \ 
- --validator \
- --telemetry-url "wss://submit.3dpass.network/submit 0" \
- --author <your mining pub key> \
- --no-mdns \
- --unsafe-ws-external \
- --unsafe-rpc-external \
- --rpc-cors all \
- --ws-port 9945 \
- --rpc-port 9934 \
- --pruning archive \
-```
+1. **Node.js**: Version 18.0.0 or higher
+2. **Yarn**: Version 3.6.0 or higher (package manager)
+3. **MongoDB**: For data storage
+4. **Full Archive Blockchain Node**: A running blockchain node with `--pruning archive` flag
+   - The node should be synced from genesis block
+   - Example command to run the node:
+   ```bash
+   ./target/release/poscan-consensus \
+     --base-path ~/3dp-chain/ \
+     --chain mainnetSpecRaw.json \
+     --name "my 160 USD dedicated server" \
+     --validator \
+     --telemetry-url "wss://submit.3dpass.network/submit 0" \
+     --author <your mining pub key> \
+     --no-mdns \
+     --unsafe-ws-external \
+     --unsafe-rpc-external \
+     --rpc-cors all \
+     --ws-port 9945 \
+     --rpc-port 9934 \
+     --pruning archive
+   ```
 
 ## Code structure
 
@@ -66,6 +70,403 @@ storage.
 
 Then generally we should first index necessary data, then setup restful and graphql servers, and finally the site.
 Servers rely on the indexed data, and site reply on the APIs by the servers.
+
+## Step 1: Install Dependencies
+
+### Install Backend Dependencies
+
+```bash
+cd backend
+yarn install
+```
+
+### Install Frontend Dependencies
+
+```bash
+cd site
+yarn install
+```
+
+## Step 2: Set Up MongoDB
+
+### Option A: Using Docker Compose (Recommended for Development)
+
+The project includes a `compose.yml` file for easy MongoDB setup:
+
+```bash
+# From the project root
+docker-compose up -d
+```
+
+This will start MongoDB with:
+- Port: `27017`
+- Username: `admin`
+- Password: `password`
+- Data directory: `./data/db`
+
+### Option B: Manual MongoDB Installation
+
+Install MongoDB following the [official MongoDB installation guide](https://www.mongodb.com/docs/manual/administration/install-community/).
+
+## Step 3: Configure Environment Variables
+
+Each indexer and server requires environment variables. Create `.env` files in the respective package directories.
+
+### Common Environment Variables
+
+All indexers and servers need these variables:
+
+#### MongoDB Connection Variables
+
+Each indexer uses its own MongoDB database. You'll need to set these for each indexer:
+
+```bash
+# Block Scan
+MONGO_BLOCK_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_BLOCK_SCAN_NAME=block_scan
+
+# Account Scan
+MONGO_ACCOUNT_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_ACCOUNT_SCAN_NAME=account_scan
+
+# Runtime Scan
+MONGO_RUNTIME_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_RUNTIME_SCAN_NAME=runtime_scan
+
+# Identity Scan
+MONGO_IDENTITY_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_IDENTITY_SCAN_NAME=identity_scan
+
+# Asset Scan
+MONGO_ASSET_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_ASSET_SCAN_NAME=asset_scan
+
+# Pallet Assets Scan
+MONGO_PALLET_ASSET_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_PALLET_ASSET_SCAN_NAME=pallet_asset_scan
+
+# Pallet Proxy Scan
+MONGO_PALLET_PROXY_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_PALLET_PROXY_SCAN_NAME=pallet_proxy_scan
+
+# Pallet Recovery Scan
+MONGO_PALLET_RECOVERY_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_PALLET_RECOVERY_SCAN_NAME=pallet_recovery_scan
+
+# Multisig Scan
+MONGO_MULTISIG_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_MULTISIG_SCAN_NAME=multisig_scan
+
+# Vesting Scan
+MONGO_VESTING_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_VESTING_SCAN_NAME=vesting_scan
+
+# Uniques Scan (if needed)
+MONGO_UNIQUES_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_UNIQUES_SCAN_NAME=uniques_scan
+```
+
+#### Chain Configuration
+
+```bash
+# Chain identifier (required for server)
+# Valid values: 3dpass, polkadot, kusama, paseo, statemine, statemint, westmint, etc.
+# For The Ledger of Things, use: 3dpass
+CHAIN=3dpass
+
+# Chain RPC endpoint (WebSocket URL)
+# This should point to your full archive node
+WS_URL=ws://localhost:9945
+# Or for secure connection:
+# WS_URL=wss://your-node.example.com:9945
+```
+
+#### Server Configuration
+
+```bash
+# REST API Server Port (default: 5010)
+PORT=5010
+
+# GraphQL Server Port (default: 7100)
+PORT=7100
+
+# Optional: Simple mode for call parameters
+SIMPLE_MODE=0
+
+# Optional: Achainable profile integration
+ACHAINABLE_PROFILE_URL=https://api.achainable.com
+ACHAINABLE_AUTHORIZATION_KEY=your-api-key-here
+```
+
+#### Frontend Configuration
+
+Create a `.env` file in the `site/` directory:
+
+```bash
+# Chain identifier for the frontend
+# Must match one of the supported chains (3dpass, polkadot, kusama, etc.)
+REACT_APP_PUBLIC_CHAIN=3dpass
+
+# API endpoint (REST API server)
+REACT_APP_PUBLIC_API_END_POINT=http://localhost:5010
+
+# GraphQL endpoint
+REACT_APP_PUBLIC_GRAPHQL_END_POINT=http://localhost:7100/graphql
+
+# Optional: SubSquare API endpoint
+REACT_APP_PUBLIC_SUBSQUARE_API_END_POINT=https://{chain}.subsquare.io/api
+```
+
+### Creating .env Files
+
+For each indexer package, create a `.env` file in its directory:
+
+```bash
+# Example: backend/packages/block-scan/.env
+MONGO_BLOCK_SCAN_URL=mongodb://admin:password@localhost:27017
+MONGO_BLOCK_SCAN_NAME=block_scan
+WS_URL=ws://localhost:9945
+CHAIN=3dpass
+```
+
+## Step 4: Run the Indexers
+
+Indexers scan the blockchain and store data in MongoDB. You should run them in order, starting with the most fundamental ones.
+
+### 4.1 Block Scan (Required - Start First)
+
+The block scan indexes blocks, extrinsics, events, calls, and transfers. This is the foundation for all other indexers.
+
+```bash
+cd backend/packages/block-scan
+node src/index.js
+```
+
+Or using PM2 (recommended for production):
+
+```bash
+cd backend/packages/block-scan
+NODE_ENV=production pm2 start src/index.js --name block-scan --log-date-format 'YYYY-MM-DD HH:mm Z'
+```
+
+### 4.2 Runtime Scan (Recommended)
+
+Indexes runtime metadata versions:
+
+```bash
+cd backend/packages/runtime-scan
+node src/index.js
+```
+
+### 4.3 Account Scan (Recommended)
+
+Updates latest account balance information:
+
+```bash
+cd backend/packages/account-scan
+node src/index.js
+```
+
+### 4.4 Additional Indexers (Optional)
+
+Run these based on your needs:
+
+```bash
+# Identity Scan
+cd backend/packages/identity-scan
+node src/index.js
+
+# Asset Scan
+cd backend/packages/asset-scan
+node src/index.js
+
+# Pallet Assets Scan
+cd backend/packages/pallet-assets-scan
+node src/index.js
+
+# Pallet Proxy Scan
+cd backend/packages/pallet-proxy-scan
+node src/index.js
+
+
+# Multisig Scan
+cd backend/packages/multisig-scan
+node src/index.js
+
+# Vesting Scan
+cd backend/packages/vesting-scan
+node src/index.js
+
+
+### Running Multiple Indexers
+
+For production, use PM2 to manage multiple indexers:
+
+```bash
+# Install PM2 globally if not already installed
+npm install -g pm2
+
+# Start all indexers
+cd backend/packages/block-scan && pm2 start src/index.js --name block-scan
+cd ../runtime-scan && pm2 start src/index.js --name runtime-scan
+cd ../account-scan && pm2 start src/index.js --name account-scan
+# ... repeat for other indexers
+
+# View status
+pm2 status
+
+# View logs
+pm2 logs
+
+# Stop all
+pm2 stop all
+```
+
+## Step 5: Run the Servers
+
+Once you have indexed some data, you can start the servers.
+
+### 5.1 REST API Server
+
+The REST API server provides endpoints for blocks, extrinsics, accounts, transfers, etc.
+
+```bash
+cd backend/packages/server
+node src/index.js
+```
+
+The server will start on `http://localhost:5010` (or your configured PORT).
+
+### 5.2 GraphQL Server (Recommended)
+
+The GraphQL server is the modern API and will eventually replace the REST server.
+
+```bash
+cd backend/packages/graphql-server
+node src/index.js
+```
+
+The GraphQL endpoint will be available at `http://localhost:7100/graphql`.
+
+### 5.3 Additional Servers (Optional)
+
+```bash
+# Identity Server
+cd backend/packages/identity-server
+node src/index.js  # Default port: 5011
+
+# Multisig Server
+cd backend/packages/multisig-server
+node src/index.js  # Default port: 6011
+
+# Pallet Assets Server
+cd backend/packages/pallet-assets-server
+node src/index.js  # Default port: 5100
+```
+
+## Step 6: Run the Website
+
+Once the servers are running, start the frontend:
+
+```bash
+cd site
+yarn start
+```
+
+The website will be available at `http://localhost:3000`.
+
+### Building for Production
+
+```bash
+cd site
+yarn build
+```
+
+This creates an optimized production build in the `build/` directory.
+
+## Verification
+
+### Check Indexer Status
+
+1. **Block Scan**: Check MongoDB for the `block_scan` database and verify blocks are being indexed
+2. **Account Scan**: Check the `account_scan` database for account data
+3. Monitor indexer logs for errors
+
+### Check Server Status
+
+1. **REST API**: Visit `http://localhost:5010/overview` - should return network overview data
+2. **GraphQL**: Visit `http://localhost:7100/graphql` - should show GraphQL playground
+
+### Check Website
+
+1. Visit `http://localhost:3000`
+2. The homepage should display network statistics
+3. Try searching for a block or account
+
+## Troubleshooting
+
+### MongoDB Connection Issues
+
+- Verify MongoDB is running: `docker ps` or `mongod --version`
+- Check connection string format: `mongodb://username:password@host:port`
+- Ensure MongoDB is accessible from your network
+
+### Indexer Not Starting
+
+- Verify blockchain node is running and accessible
+- Check `WS_URL` is correct and node has `--unsafe-ws-external` flag
+- Ensure node is fully synced (for initial indexing)
+- Check indexer logs for specific errors
+
+### Server Not Starting
+
+- Verify required indexers have run and created data
+- Check MongoDB databases exist
+- Verify `CHAIN` environment variable is set correctly
+- Check server logs for initialization errors
+
+### Website Not Loading Data
+
+- Verify REST API or GraphQL server is running
+- Check `REACT_APP_PUBLIC_API_END_POINT` and `REACT_APP_PUBLIC_GRAPHQL_END_POINT` in site `.env`
+- Check browser console for API errors
+- Verify CORS is enabled on the server
+
+## Production Deployment
+
+For production deployment:
+
+1. Use PM2 or similar process manager for all services
+2. Set up proper logging and monitoring
+3. Use environment-specific `.env` files
+4. Configure reverse proxy (nginx) for the website
+5. Set up MongoDB replication for high availability
+6. Use secure MongoDB connections
+7. Configure proper firewall rules
+
+## Indexer Order and Dependencies
+
+**Critical Path:**
+1. Block Scan (must run first)
+2. Runtime Scan (recommended early)
+3. Account Scan (can run in parallel with block scan)
+
+**Optional (can run in parallel after block scan):**
+- Identity Scan
+- Asset Scan
+- Pallet Assets Scan
+- Pallet Proxy Scan
+- Multisig Scan
+- Vesting Scan
+
+## Notes
+
+- Initial indexing can take a long time depending on chain size
+- Indexers run continuously and sync new blocks as they are produced
+- You can run multiple indexers in parallel after the initial block scan
+- The REST API server and GraphQL server can run simultaneously
+- The website requires at least one API server (REST or GraphQL) to be running
+
 
 ## REST API 
 
